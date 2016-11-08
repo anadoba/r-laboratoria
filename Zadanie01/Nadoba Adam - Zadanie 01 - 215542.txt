@@ -1,0 +1,67 @@
+Zadanie 01 
+Zestaw: 8  Nadoba Adam ( Fakultet: Język R 215542 ) 
+
+Odpowiedzi
+
+Kwantyle wielkości spółek:
+Q1 = 138.0125
+Q2 = 409.7250
+Q3 = 2137.0000
+
+Obliczenia dla wskaźnika C/Z spółek:
+Spółki bardzo małe:
+  x̅ = 7.393636		Me = 7.39		σ􏰄 = 0.6876742
+Spółki małe:
+  x̅ = 17.02175		Me = 16.2		σ􏰄 = 2.403677
+Spółki średnie:
+  x̅ = 28.35833		Me = 24.315		σ􏰄 = 11.12537
+Spółki duże:
+  x̅ = 59.15727		Me = 59.88		σ􏰄 = 6.636552 
+
+Zdecydowanie najciekawszy punkt zaprezentowanych wyników to odchylenie standardowe obliczone dla wskaźnika C/Z spółek średnich. 
+Jest ono znacznie wyższe od pozostałych ponieważ w obrębie spółek sklasyfikowanych jako średnie mających zazwyczaj około 25 C/Z pojawiają się wpisy takie, 
+jak Spółka 10 (wielkość 2122, a więc ponad 4 razy taka co średnia wielkość w tym przedziale), która znajduje się jeszcze minimalnie pod granicą wytyczoną przez Q3.
+
+
+
+
+
+#Adam Nadoba
+#Zadanie 01
+#Zestaw 8
+
+setwd("C:/r-laboratoria/Zadanie01")
+
+spolki <- read.csv(file="Dane01.csv", head=TRUE)
+
+#Wielkość spółek
+#kwantyle! a nie kwartyle
+wielkoscKwartyle <- quantile(spolki[,2], type=6)
+#Q1 = kwartyle[2] itd
+wielkoscQ1 <- wielkoscKwartyle[2]
+wielkoscQ2 <- wielkoscKwartyle[3]
+wielkoscQ3 <- wielkoscKwartyle[4]
+
+#dplyr przykrywa standardowe 'filter'
+library(dplyr)
+
+spolkiBardzoMale <- filter(spolki, spolki[2] <= wielkoscQ1)
+spolkiMale <- filter(spolki, wielkoscQ1 < spolki[2] & spolki[2] <= wielkoscQ2)
+spolkiSrednie <- filter(spolki, wielkoscQ2 < spolki[2] & spolki[2] <= wielkoscQ3)
+spolkiDuze <- filter(spolki, wielkoscQ3 < spolki[2])
+
+sredniaCzSpolkiBardzoMale <- mean(spolkiBardzoMale[,3])
+medianaCzSpolkiBardzoMale <- median(spolkiBardzoMale[,3])
+odchylenieCzSpolkiBardzoMale <- sqrt(sum((spolkiBardzoMale[,3] - sredniaCzSpolkiBardzoMale)^2)/nrow(spolkiBardzoMale))
+
+sredniaCzSpolkiMale <- mean(spolkiMale[,3])
+medianaCzSpolkiMale <- median(spolkiMale[,3])
+odchylenieCzSpolkiMale <- sqrt(sum((spolkiMale[,3] - sredniaCzSpolkiMale)^2)/nrow(spolkiMale))
+
+sredniaCzSpolkiSrednie <- mean(spolkiSrednie[,3])
+medianaCzSpolkiSrednie <- median(spolkiSrednie[,3])
+odchylenieCzSpolkiSrednie <- sqrt(sum((spolkiSrednie[,3] - sredniaCzSpolkiSrednie)^2)/nrow(spolkiSrednie))
+
+sredniaCzSpolkiDuze <- mean(spolkiDuze[,3])
+medianaCzSpolkiDuze <- median(spolkiDuze[,3])
+odchylenieCzSpolkiDuze <- sqrt(sum((spolkiDuze[,3] - sredniaCzSpolkiDuze)^2)/nrow(spolkiDuze))
