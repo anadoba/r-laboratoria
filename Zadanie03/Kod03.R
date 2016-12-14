@@ -2,7 +2,7 @@
 #Test 08
 #Zestaw 8
 
-#set.seed(123)
+set.seed(123)
 
 wzrostCh <- rnorm(100, 173, 5)
 wzrostDz <- rnorm(110, 169, 5)
@@ -78,9 +78,16 @@ t.test(W,mu=0,alt="two.sided")
 # robimy konkretne zadanka
 x <- c(-0.53,0.37,0.82,0.07,0.48,-1.31,-1.62,-0.62,0.10,-1.54,0.61,-0.39,-1.97,0.94,-0.92,0.49,0.04,0.85,0.68,0.41,0.10,-0.74,0.62,0.52,0.23)
 
-#H0 - nie ma podstaw do odrzucenia
-t.test(x,mu=0,alt="two.sided")
-#H1 - nie ma podstaw do odrzucenia
-t.test(x,mu=0,alt="greater")
+mean(x)
 
-# pakiet 'class' wybrany
+sd(x)
+
+# t_n-1
+(mean(x)/sd(x))*(length(x))^0.5
+
+#1 - nie ma podstaw do odrzucenia
+t.test(x,mu=0,alt="two.sided")
+#2 - nie ma podstaw do odrzucenia
+t.test(x,mu=0,alt="greater")
+#3 - nie ma podstaw do odrzucenia
+t.test(x,mu=0,alt="less")
