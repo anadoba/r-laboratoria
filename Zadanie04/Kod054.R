@@ -1,20 +1,22 @@
 ###########################################################
 # Wyznaczenie wartoci referencyjnych na bazie ROC = Receiver Operating Characteristic
 ###########################################################
-#install.packages("pROC")
+install.packages("pROC")
 library(pROC)
+install.packages("cwhmisc")
+library(cwhmisc)
+install.packages("Hmisc")
+library(Hmisc)
 # Funkcja w³asna w której obliczane s¹ Swoistoæ i Czu³oæ i przedzia³y ufnoci
 source('C:\\GKBibliotekiInf\\GKProgramyHelpWlasny\\GKR\\RFunkcje\\CzuloscSwoistosc.R')
-setwd('/users/adam/Studia/r-laboratoria/Zadanie04')
+setwd('C:\\r-laboratoria\\Zadanie04')
 
 NumerZadania <- 54
 LiczbaPacjentow <- 85
 
 Plik<-'Test54AdamNadoba 8.csv'
 Dane <- read.csv2(Plik,header=T,sep=';')
-
-DB <- data.frame(LVEF=LF,Incydent=In)
-DB <- DB[sample(1:LiczbaPacjentow,LiczbaPacjentow),]
+DB <- as.data.frame(Dane)
 
 #----- Znalezienie zale¿noci Swoistoci i Czu³oci
 jROC<-roc(Incydent~LVEF,data=Dane, percent=TRUE) 
@@ -41,10 +43,6 @@ PredCI<-as.table(CzuloscSwoistosc(jW[c(5,7,8,6)]))
 #Test=T |         X           |czu³oæ (CI)           
 #       |         X           |predykcja dodatnia (CI)
 ###########################################################
-#install.packages("cwhmisc")
-library(cwhmisc)
-#install.packages("Hmisc")
-library(Hmisc)
 source('C:\\GKBibliotekiInf\\GKProgramyHelpWlasny\\GKR\\RFunkcje\\Wydruk.R')
 
 CzuloscSwoistosc<-function(x){
